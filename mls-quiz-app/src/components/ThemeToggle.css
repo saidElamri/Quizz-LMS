@@ -1,0 +1,30 @@
+
+.theme-toggle-btn {
+    
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .theme-toggle-btn:hover {
+    background-color: #00796b;
+    transform: scale(1.05); 
+  }
+  
+  .theme-toggle-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .theme-toggle-text {
+    font-weight: 600;
+  }
+  

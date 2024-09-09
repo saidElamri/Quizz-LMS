@@ -1,0 +1,96 @@
+/* Register.css */
+.RegisterPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    padding: 20px;
+  }
+  
+  .RegisterContainer {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-direction: column; /* Stack the items vertically */
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px; /* Control max width */
+    width: 100%; /* Ensure it takes full width */
+  }
+  
+  .Register {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px; /* Limit width for better appearance */
+    width: 100%;
+    margin-bottom: 20px; /* Space between Register and Description */
+  }
+  
+  .Description {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px; /* Limit width for better appearance */
+    width: 100%;
+  }
+  
+  .Register h2,
+  .Description h2 {
+    margin-bottom: 20px;
+    color: #4a4a4a;
+    text-align: center; /* Center text */
+  }
+  
+  .Register form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Register div {
+    margin-bottom: 15px;
+  }
+  
+  .Register label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+  }
+  
+  .Register input,
+  .Register select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .Register button {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    margin-top: 10px; /* Space above the button */
+  }
+  
+  .Register button:hover {
+    background: #45a049;
+  }
+  
+  .Description p {
+    color: #555;
+    line-height: 1.6;
+  }
+  
