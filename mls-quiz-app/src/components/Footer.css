@@ -1,4 +1,22 @@
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+main {
+  flex: 1;
+  padding: 20px; 
+}
+
+
 .Footer {
   background: var(--background-color);
   border-top: 1px solid var(--text-color);
@@ -8,8 +26,10 @@
   justify-content: center;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, border-color 0.3s;
-  
+  width: 100%; 
+  position: relative; 
 }
+
 
 .Footer p {
   color: var(--text-color);

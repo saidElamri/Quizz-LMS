@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import '../pages/Register.css';
+
 function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -12,15 +11,29 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send a request to your backend API
-    console.log('Registration attempt:', { username, email, password, role });
-    // TODO: Implement actual registration logic
-    navigate('/'); // Redirect to login page after registration
+
+    try {
+      const response = await fetch('http://localhost:3001/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password, role }),
+      });
+
+      if (response.ok) {
+        console.log('Registration successful');
+        navigate('/'); // Redirect to login page after successful registration
+      } else {
+        console.error('Registration failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
     <div className="RegisterPage">
-      
       <div className="RegisterContainer">
         <main className="Register">
           <h2>Register</h2>
@@ -76,7 +89,6 @@ function Register() {
           </p>
         </div>
       </div>
-      
     </div>
   );
 }

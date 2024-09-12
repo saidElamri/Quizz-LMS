@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/api';
-import '../pages/login.css'; //
+import '../pages/login.css'; // Ensure this CSS file exists
 import QuizDescription from '../components/QuizDescription';
 
 function Login() {
@@ -13,23 +12,33 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
-      const response = await login(email, password);
-      // Assuming the API returns a token and user role
-      const { token, role } = response.data;
+      const response = await fetch('http://localhost:3001/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // Store token and role in localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
+      if (response.ok) {
+        const { token, role } = await response.json();
+        // Store token and role in localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', role);
 
-      // Redirect based on the user role
-      if (role === 'student') {
-        navigate('/student-home');
-      } else if (role === 'teacher') {
-        navigate('/teacher-home');
+        // Redirect based on the user role
+        if (role === 'student') {
+          navigate('/student-home');
+        } else if (role === 'teacher') {
+          navigate('/teacher-home');
+        }
+      } else {
+        setError('Invalid email or password');
       }
     } catch (err) {
-      setError('Invalid email or password');
+      setError('Error occurred. Please try again.');
     }
   };
 
