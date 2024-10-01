@@ -46,52 +46,52 @@ const StudentHome = () => {
 
   return (
     <div>
-      <Header />
-    <div style={styles.container}>
-      <h1>Welcome, Student!</h1>
+      <Header /> {/* Only the Header with ThemeToggle here */}
+      <div style={styles.container}>
+        <h1>Welcome, Student!</h1>
 
-      <div style={styles.section}>
-        <h2>Upcoming Quizzes</h2>
-        <ul>
-          {upcomingQuizzes.map((quiz, index) => (
-            <li key={index}>{quiz.name} - {quiz.dueDate}</li>
-          ))}
-        </ul>
-      </div>
+        <div style={styles.section}>
+          <h2>Upcoming Quizzes</h2>
+          <ul>
+            {upcomingQuizzes.map((quiz, index) => (
+              <li key={index}>{quiz.name} - {quiz.dueDate}</li>
+            ))}
+          </ul>
+        </div>
 
-      <div style={styles.section}>
-        <h2>Recent Activity</h2>
-        <ul>
-          {recentActivity.map((activity, index) => (
-            <li key={index}>{activity.name} - {activity.score}</li>
-          ))}
-        </ul>
-      </div>
+        <div style={styles.section}>
+          <h2>Recent Activity</h2>
+          <ul>
+            {recentActivity.map((activity, index) => (
+              <li key={index}>{activity.name} - {activity.score}</li>
+            ))}
+          </ul>
+        </div>
 
-      <div style={styles.section}>
-        <h2>Your Progress</h2>
-        <p>Progress: {progress}%</p>
-      </div>
+        <div style={styles.section}>
+          <h2>Your Progress</h2>
+          <p>Progress: {progress}%</p>
+        </div>
 
-      <div style={styles.section}>
-        <h2>Leaderboard</h2>
-        <ul>
-          {leaderboard.map((student, index) => (
-            <li key={index}>{student.name} - {student.score}</li>
-          ))}
-        </ul>
-      </div>
+        <div style={styles.section}>
+          <h2>Leaderboard</h2>
+          <ul>
+            {leaderboard.map((student, index) => (
+              <li key={index}>{student.name} - {student.score}</li>
+            ))}
+          </ul>
+        </div>
 
-      <div style={styles.section}>
-        <h2>Resources</h2>
-        <ul>
-          {resources.map((resource, index) => (
-            <li key={index}>{resource.title}</li>
-          ))}
-        </ul>
+        <div style={styles.section}>
+          <h2>Resources</h2>
+          <ul>
+            {resources.map((resource, index) => (
+              <li key={index}>{resource.title}</li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </div>
   );
 };
@@ -106,4 +106,3 @@ const styles = {
 };
 
 export default StudentHome;
-

@@ -12,6 +12,7 @@ import ResourcesPage from './pages/Resources';
 import StudentHome from './components/StudentHome'; 
 import TeacherHome from './components/TeacherHome'; 
 import Profile from './pages/Profile';
+import Settings from './components/Settings';
 function App() {
   return (
     <Routes>
@@ -23,6 +24,7 @@ function App() {
       <Route path="/resources" element={<ResourcesPage />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/settings" element={<Settings />} />
 
       
       <Route path="/student-home" element={<StudentHome />} />

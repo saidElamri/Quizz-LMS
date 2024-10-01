@@ -31,6 +31,82 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// Quiz model
+const quizSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  questions: [
+    {
+      question: { type: String, required: true },
+      options: [String],
+      correctAnswer: { type: String, required: true },
+    },
+  ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const Quiz = mongoose.model('Quiz', quizSchema);
+
+// Create a quiz
+app.post('/api/quizzes', async (req, res) => {
+  const { title, questions } = req.body;
+
+  try {
+    // Verify the user token to ensure only authenticated users can create quizzes
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const newQuiz = new Quiz({
+      title,
+      questions,
+      createdBy: decoded.id,
+    });
+
+    await newQuiz.save();
+    res.status(201).json(newQuiz);
+  } catch (error) {
+    console.error('Error creating quiz:', error);
+    res.status(500).json({ error: 'Failed to create quiz' });
+  }
+});
+
+// Fetch all quizzes
+app.get('/api/quizzes', async (req, res) => {
+  try {
+    const quizzes = await Quiz.find().populate('createdBy', 'username');
+    res.json(quizzes);
+  } catch (error) {
+    console.error('Error fetching quizzes:', error);
+    res.status(500).json({ error: 'Failed to fetch quizzes' });
+  }
+});
+
+// Fetch quizzes by teacher
+app.get('/api/quizzes/teacher', async (req, res) => {
+  try {
+    // Verify the user token to ensure only authenticated users can fetch their quizzes
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const quizzes = await Quiz.find({ createdBy: decoded.id });
+    res.json(quizzes);
+  } catch (error) {
+    console.error('Error fetching teacher quizzes:', error);
+    res.status(500).json({ error: 'Failed to fetch quizzes' });
+  }
+});
+
+
 // Register endpoint
 app.post('/api/register', async (req, res) => {
   const { username, email, password, role } = req.body;

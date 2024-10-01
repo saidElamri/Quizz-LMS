@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../pages/Register.css';
+import moroccoGif from '../assets/morocco-540.gif'; // Adjust the path as necessary
+
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -87,6 +89,7 @@ function Register() {
           <p>
             Register to access a variety of quizzes designed to enhance your learning experience. Whether you are a student or teacher, our platform offers valuable resources and tools to aid in your educational journey.
           </p>
+          <img src={moroccoGif} alt="Morocco GIF" className="education-gif" />
         </div>
       </div>
     </div>

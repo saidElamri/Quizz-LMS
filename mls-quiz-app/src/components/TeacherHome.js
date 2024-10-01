@@ -82,13 +82,31 @@ const TeacherHome = () => {
       title: quizTitle,
       questions,
     };
-    // Send quizData to the backend API
-    console.log(quizData); // Replace with actual API call
-    // Reset form
-    setQuizTitle('');
-    setQuestions([{ question: '', options: ['', '', '', ''], correctAnswer: '' }]);
-    setStep(1);
+  
+    try {
+      const token = localStorage.getItem('token'); // Assuming you store the JWT token in localStorage
+      const response = await fetch('http://localhost:3001/api/quizzes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include token in request headers
+        },
+        body: JSON.stringify(quizData),
+      });
+  
+      if (response.ok) {
+        console.log('Quiz created successfully');
+        setQuizTitle('');
+        setQuestions([{ question: '', options: ['', '', '', ''], correctAnswer: '' }]);
+        setStep(1);
+      } else {
+        console.error('Failed to create quiz');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
 
   return (
     <div>
