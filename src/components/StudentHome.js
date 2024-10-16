@@ -69,7 +69,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
-    backgroundColor: '#f9f9f9',
   },
   container: {
     flex: 1,
@@ -77,7 +76,7 @@ const styles = {
     padding: '40px',
     maxWidth: '1200px',
     margin: '20px auto',
-    backgroundColor: '#ffffff',
+   
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     display: 'flex',

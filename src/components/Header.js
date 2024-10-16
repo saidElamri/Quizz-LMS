@@ -81,7 +81,7 @@ const Header = () => {
             <Link to="/profile">Profile</Link>
             <Link to="/settings">Settings</Link>
             <Link to="/notifications">Notifications</Link>
-            <Link to="/logout">Logout</Link>
+            <Link to="/">Logout</Link>
           </div>
         )}
       </div>

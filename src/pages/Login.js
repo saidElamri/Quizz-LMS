@@ -4,41 +4,38 @@ import '../pages/login.css'; // Ensure this CSS file exists
 import QuizDescription from '../components/QuizDescription';
 
 function Login() {
-  const [identifier, setIdentifier] = useState(''); // Use a single identifier for email/username
+  const [identifier, setIdentifier] = useState(''); // This will accept either username or email
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3001/api/login', {
+      console.log("Sending login request with:", { identifier, password }); // Log the request data
+      const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ identifier, password }), // Send identifier (either email or username)
+        body: JSON.stringify({ identifier, password }) // Ensure this matches the backend expectation
       });
 
       if (response.ok) {
         const { token, role } = await response.json();
-        // Store token and role in localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
 
-        // Redirect based on the user role
-        if (role === 'student') {
-          navigate('/student-home');
-        } else if (role === 'teacher') {
-          navigate('/teacher-home');
-        }
+        // Redirect based on role
+        navigate(role === 'student' ? '/student-home' : '/teacher-home');
       } else {
-        setError('Invalid username or password');
+        const errMsg = await response.text(); // Get the error message from the response
+        setError(errMsg);
       }
     } catch (err) {
-      setError('Error occurred. Please try again.');
+      setError('Network error, please try again later.');
     }
   };
 
@@ -50,12 +47,12 @@ function Login() {
           {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="identifier">Email/Username:</label> 
+              <label htmlFor="identifier">Email/Username:</label>
               <input
                 type="text"
                 id="identifier"
                 value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)} // Set the identifier
+                onChange={(e) => setIdentifier(e.target.value)}
                 required
               />
             </div>

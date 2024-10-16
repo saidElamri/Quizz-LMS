@@ -6,7 +6,7 @@ import api from '../services/api';
 function QuizCreator() {
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState([{ text: '', options: ['', '', '', ''], correctAnswer: 0 }]);
-  const { user } = useAuth();
+  const { user } = useAuth(); // Keeping the user for potential use
   const navigate = useNavigate();
 
   const addQuestion = () => {
@@ -22,7 +22,8 @@ function QuizCreator() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/quizzes', { title, questions });
+      // Include user information in the POST request if necessary
+      await api.post('/quizzes', { title, questions, creator: user.id }); // Assuming user has an id
       navigate('/');
     } catch (error) {
       console.error('Failed to create quiz', error);
