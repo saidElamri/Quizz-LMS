@@ -33,24 +33,41 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.post('/api/quizzes', async (req, res) => {
   const { title, questions } = req.body;
 
+  // Validate incoming quiz structure
+  if (!Array.isArray(questions) || questions.length === 0) {
+    return res.status(400).json({ error: 'Questions are required.' });
+  }
+
+  for (const question of questions) {
+    if (question.options.length !== 4) {
+      return res.status(400).json({ error: 'Each question must have exactly 4 options.' });
+    }
+  }
+
   try {
-    // Verify the user token to ensure only authenticated users can create quizzes
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Debugging: Log the decoded token to verify user ID
+    console.log('Decoded token:', decoded);
 
     const newQuiz = new Quiz({
       title,
       questions,
-      createdBy: decoded.id,
+      createdBy: decoded.id, // Ensure decoded.id is correct
     });
 
     await newQuiz.save();
     res.status(201).json(newQuiz);
   } catch (error) {
     console.error('Error creating quiz:', error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ error: 'Quiz validation failed', details: error.errors });
+    }
     res.status(500).json({ error: 'Failed to create quiz' });
   }
 });
+
 
 // Fetch all quizzes
 app.get('/api/quizzes', async (req, res) => {
@@ -97,18 +114,26 @@ app.post('/api/register', async (req, res) => {
   const { username, email, password, role } = req.body;
 
   try {
+    // Check if the email is already in use
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send('Email is already in use');
+      // Return 400 error if email is already in use
+      return res.status(400).json({ error: 'Email is already in use' });
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
     const newUser = new User({ username, email, password: hashedPassword, role });
     await newUser.save();
-    res.status(201).send('User registered successfully');
+
+    // Respond with success
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Error registering user:', error);
-    res.status(500).send('Error registering user');
+    // Respond with 500 error for server issues
+    res.status(500).json({ error: 'Error registering user' });
   }
 });
 
