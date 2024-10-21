@@ -1,8 +1,5 @@
-/* Quiz.css */
-
 .quiz-container {
   padding: 20px;
-  
   color: #333;
   font-family: 'Arial', sans-serif;
 }
@@ -18,7 +15,6 @@
 .quiz-card {
   max-width: 600px;
   margin: 20px auto;
-  
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 20px;
@@ -30,10 +26,14 @@
   transform: scale(1.02);
 }
 
-.question {
+.quiz-question {
   font-size: 1.5em;
   color: #264653;
   margin-bottom: 15px;
+}
+
+.quiz-options {
+  margin-bottom: 10px;
 }
 
 .option {
@@ -42,9 +42,9 @@
   padding: 12px;
   margin: 8px 0;
   border-radius: 8px;
-
   border: 1px solid #ccc;
   transition: background-color 0.3s, border-color 0.3s;
+  cursor: pointer; /* Change cursor to pointer */
 }
 
 .option:hover {
@@ -52,33 +52,14 @@
   border-color: #2a9d8f;
 }
 
-/* Style for the correct answer */
 .option.correct {
   background-color: #c6f6d5; /* Light green for correct */
   border-color: #38a169; /* Darker green border */
 }
 
-/* Style for the incorrect answer */
 .option.incorrect {
   background-color: #feebc8; /* Light orange for incorrect */
   border-color: #e53e3e; /* Darker red border */
-}
-
-input[type="radio"] {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ddd;
-  border-radius: 50%;
-  outline: none;
-  margin-right: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-input[type="radio"]:checked {
-  background-color: #2a9d8f;
-  border-color: #2a9d8f;
 }
 
 .submit-button {
@@ -112,6 +93,7 @@ input[type="radio"]:checked {
   font-size: 1.2em;
 }
 
+/* Score Popup Styles */
 .score-popup {
   position: fixed;
   top: 0;
@@ -131,6 +113,10 @@ input[type="radio"]:checked {
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
+}
+
+.score-popup-content h2 {
+  margin-bottom: 10px;
 }
 
 .next-quiz-button {

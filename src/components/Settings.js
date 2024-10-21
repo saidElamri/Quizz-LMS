@@ -14,7 +14,7 @@ function Settings() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/api/update-profile', {
+      const response = await fetch('https://quizz-lms.onrender.com/api/update-profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

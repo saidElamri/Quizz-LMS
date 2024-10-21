@@ -7,6 +7,7 @@ function About() {
   return (
     <div >
        <Header />
+       <div>
       <h1>About QuizMaster: Empowering Education Through Interactive Learning</h1>
       
       <section>
@@ -29,6 +30,7 @@ function About() {
         <h2>Contact Us</h2>
         <p>Have questions or suggestions? We'd love to hear from you! Reach out to our support team at support@quizmaster.com or connect with us on social media.</p>
       </section>
+      </div>
       <Footer />
     </div>
   );

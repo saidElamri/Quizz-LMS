@@ -12,7 +12,7 @@ function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch('http://localhost:3001/api/quizzes')
+    fetch('https://quizz-lms.onrender.com/api/quizzes')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);

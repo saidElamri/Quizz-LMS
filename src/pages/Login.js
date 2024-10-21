@@ -15,7 +15,7 @@ function Login() {
 
     try {
       console.log("Sending login request with:", { identifier, password }); // Log the request data
-      const response = await fetch('http://localhost:3001/api/auth/login', {
+      const response = await fetch('https://quizz-lms.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

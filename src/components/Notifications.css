@@ -1,0 +1,53 @@
+/* Notifications.css */
+.notifications-container {
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    max-width: 500px; /* Maximum width */
+    margin: 20px auto; /* Center align */
+  }
+  
+  .notifications-title {
+    font-size: 1.8em; /* Title size */
+    color: #264653; /* Title color */
+    margin-bottom: 10px; /* Space below title */
+  }
+  
+  .loading-message,
+  .no-notifications {
+    color: #e76f51; /* Red for loading or no notifications */
+    text-align: center; /* Center align */
+  }
+  
+  .notifications-list {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
+  
+  .notification-item {
+    background-color: #ffffff; /* White background for items */
+    border-radius: 6px; /* Rounded corners */
+    padding: 15px; /* Spacing inside items */
+    margin: 10px 0; /* Space between items */
+    transition: background-color 0.3s; /* Smooth background transition */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for items */
+  }
+  
+  .notification-item:hover {
+    background-color: #e9f5f5; /* Light hover effect */
+  }
+  
+  .notification-message {
+    font-size: 1em; /* Message size */
+    color: #333; /* Dark text color */
+  }
+  
+  .notification-time {
+    font-size: 0.85em; /* Smaller time text */
+    color: #999; /* Light grey color */
+    display: block; /* Make time display as block */
+    margin-top: 5px; /* Space above time */
+  }
+  

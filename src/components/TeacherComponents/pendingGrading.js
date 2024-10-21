@@ -12,7 +12,7 @@ const PendingGrading = () => {
   const fetchPendingGrading = async () => {
     try {
       // Fetch pending quizzes from the API
-      const response = await fetch('http://localhost:3001/api/pending-grading');
+      const response = await fetch('https://quizz-lms.onrender.com/api/pending-grading');
       const data = await response.json();
 
       if (response.ok) {

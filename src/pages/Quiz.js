@@ -9,6 +9,10 @@ const Quiz = () => {
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [score, setScore] = useState(0);
+  // Removed completedQuizzes state as it's not used
+  const [showScorePopup, setShowScorePopup] = useState(false);
+  const [currentQuizIndex, setCurrentQuizIndex] = useState(0); // Track the current quiz
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -31,14 +35,33 @@ const Quiz = () => {
   }, []);
 
   const handleAnswerChange = (questionIndex, selectedAnswer) => {
+    // Set user answer and check if it's correct
     setUserAnswers({
       ...userAnswers,
       [questionIndex]: selectedAnswer,
     });
+
+    const isCorrect = quizzes[questionIndex].correct_answer === selectedAnswer;
     setResults({
       ...results,
-      [questionIndex]: quizzes[questionIndex].correct_answer === selectedAnswer,
+      [questionIndex]: isCorrect,
     });
+
+    if (isCorrect) {
+      setScore(prevScore => prevScore + 1); // Increment score
+    }
+
+    // Move to next quiz after selection
+    if (questionIndex < quizzes.length - 1) {
+      setCurrentQuizIndex(prevIndex => prevIndex + 1);
+    } else {
+      setShowScorePopup(true); // Show score popup after last quiz
+    }
+  };
+
+  const handleNextQuiz = () => {
+    setShowScorePopup(false);
+    setCurrentQuizIndex(prevIndex => prevIndex + 1); // Move to next quiz
   };
 
   if (loading) {
@@ -49,45 +72,67 @@ const Quiz = () => {
     return <div className="error-message">Error: {error}</div>;
   }
 
+  // Check if all quizzes are answered
+  const isLastQuiz = currentQuizIndex === quizzes.length - 1;
+
   return (
-    <div className="quiz-container">
+    <div>
       <Header />
-      <h1 className="quiz-title">Random Quizzes</h1>
-      {quizzes.map((quiz, index) => (
-        <div key={index} className="quiz-card">
-          <h3 className="quiz-question">{quiz.question}</h3>
-          <div className="quiz-options">
-            {quiz.incorrect_answers.concat(quiz.correct_answer).sort().map((option, i) => {
-              const isSelected = userAnswers[index] === option; // Check if this option is selected
-              const isCorrect = results[index] === true; // Check if the answer is correct
-              const isIncorrect = results[index] === false; // Check if the answer is incorrect
-              
-              return (
-                <div 
-                  key={i} 
-                  className={`option ${isCorrect && isSelected ? 'correct' : isIncorrect && isSelected ? 'incorrect' : ''}`}
-                >
-                  <label>
-                    <input
-                      type="radio"
-                      name={`question-${index}`}
-                      value={option}
-                      onChange={() => handleAnswerChange(index, option)}
-                      checked={isSelected} // Mark the selected option
-                    />
-                    {option}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-          {results[index] !== undefined && (
-            <div className={`result ${results[index] ? 'correct' : 'incorrect'}`}>
-              {results[index] ? 'Correct!' : 'Incorrect, try again.'}
+      <div className="quiz-container">
+        <h1 className="quiz-title">Random Quizzes</h1>
+
+        {currentQuizIndex < quizzes.length && (
+          <div className="quiz-card">
+            <h3 className="quiz-question">{quizzes[currentQuizIndex].question}</h3>
+            <div className="quiz-options">
+              {quizzes[currentQuizIndex].incorrect_answers.concat(quizzes[currentQuizIndex].correct_answer).sort().map((option, i) => {
+                const isSelected = userAnswers[currentQuizIndex] === option; // Check if this option is selected
+                const isCorrect = results[currentQuizIndex] === true; // Check if the answer is correct
+                const isIncorrect = results[currentQuizIndex] === false; // Check if the answer is incorrect
+                
+                return (
+                  <div 
+                    key={i} 
+                    className={`option ${isCorrect && isSelected ? 'correct' : isIncorrect && isSelected ? 'incorrect' : ''}`}
+                    onClick={() => handleAnswerChange(currentQuizIndex, option)} // Make the entire option clickable
+                  >
+                    <label>
+                      <input
+                        type="radio"
+                        name={`question-${currentQuizIndex}`}
+                        value={option}
+                        style={{ display: 'none' }} // Hide the actual radio button
+                        checked={isSelected} // Mark the selected option
+                        readOnly // Prevent clicking the radio button directly
+                      />
+                      {option}
+                    </label>
+                  </div>
+                );
+              })}
             </div>
-          )}
-        </div>
-      ))}
+            {results[currentQuizIndex] !== undefined && (
+              <div className={`result ${results[currentQuizIndex] ? 'correct' : 'incorrect'}`}>
+                {results[currentQuizIndex] ? 'Correct!' : 'Incorrect, try again.'}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Score popup */}
+        {showScorePopup && (
+          <div className="score-popup">
+            <div className="score-popup-content">
+              <h2>Quiz Completed!</h2>
+              <p className="score">Your Score: {score} / {quizzes.length}</p>
+              <button className="next-quiz-button" onClick={handleNextQuiz}>
+                {isLastQuiz ? 'Close' : 'Next Quiz'}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       <Footer />
     </div>
   );

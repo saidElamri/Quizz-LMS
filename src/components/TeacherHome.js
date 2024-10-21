@@ -78,7 +78,7 @@ const TeacherHome = () => {
 
     try {
       const token = localStorage.getItem('token'); 
-      const response = await fetch('http://localhost:3001/api/quizzes', {
+      const response = await fetch('https://quizz-lms.onrender.com/api/quizzes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
