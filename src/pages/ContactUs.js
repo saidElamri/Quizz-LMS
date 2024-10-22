@@ -30,7 +30,7 @@ function ContactUs() {
       <div className="contact-details">
         <div className="contact-info">
           <h2>Get In Touch</h2>
-          <p><FaPhone /> +123 456 7890</p>
+          <p><FaPhone /> +212 625 433 397</p>
           <p><FaEnvelope /> info@mlsquizapp.com</p>
           <p>123 Quiz Lane, Learning City, ML 45678</p>
         </div>

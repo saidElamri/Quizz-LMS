@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import '../pages/login.css'; // Ensure this CSS file exists
 import QuizDescription from '../components/QuizDescription';
 
 function Login() {
-  const [identifier, setIdentifier] = useState(''); // This will accept either username or email
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      console.log("Sending login request with:", { identifier, password }); // Log the request data
       const response = await fetch('https://quizz-lms.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ identifier, password }) // Ensure this matches the backend expectation
+        body: JSON.stringify({ identifier, password })
       });
 
       if (response.ok) {
@@ -28,14 +28,35 @@ function Login() {
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
 
-        // Redirect based on role
-        navigate(role === 'student' ? '/student-home' : '/teacher-home');
+        Swal.fire({
+          title: 'Success!',
+          text: 'You are logged in.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'my-custom-popup', // Add custom class for styles if needed
+          }
+        }).then(() => {
+          navigate(role === 'student' ? '/student-home' : '/teacher-home');
+        });
       } else {
-        const errMsg = await response.text(); // Get the error message from the response
+        const errMsg = await response.text();
         setError(errMsg);
+        Swal.fire({
+          title: 'Error!',
+          text: errMsg || 'Invalid credentials, please try again.',
+          icon: 'error',
+          confirmButtonText: 'Try Again',
+        });
       }
     } catch (err) {
       setError('Network error, please try again later.');
+      Swal.fire({
+        title: 'Network Error!',
+        text: 'Network error, please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
     }
   };
 

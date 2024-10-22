@@ -33,7 +33,6 @@
   bottom: -150px;
   right: -150px;
 }
-
 /* Container for the login and description side by side */
 .LoginContainer {
   display: flex;
@@ -70,6 +69,7 @@
   color: #ff4b5c;
   margin-bottom: 15px;
 }
+
 
 .Login form {
   display: flex;
@@ -109,6 +109,7 @@
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
+
 .Login button {
   background: #1d976c;
   color: #fff;
@@ -120,7 +121,8 @@
   transition: background 0.3s ease, transform 0.2s;
   width: 100%; 
   margin-left:5px;
-  margin-top:10px
+  margin-top:10px;
+  margin-left: -10px
 }
 
 .Login button:hover {
@@ -161,6 +163,29 @@
 .QuizDescription p {
   font-size: 1rem;
   line-height: 1.6;
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+  font-family: 'Arial', sans-serif; /* Ensure consistency with your app */
+  border-radius: 12px; /* Match your login box */
+}
+
+.swal2-title {
+  color: #1d976c; /* Match your button color */
+}
+
+.swal2-content {
+  color: #333; /* Adjust content color */
+}
+
+.swal2-confirm {
+  background-color: #1d976c; /* Match button color */
+  color: white;
+}
+
+.swal2-confirm:hover {
+  background-color: #11998e; /* Darker shade on hover */
 }
 
 /* Responsive Styles */

@@ -59,7 +59,6 @@ const sampleEntries = Array.from({ length: 30 }, (_, index) => ({
 const styles = {
   container: {
     padding: '20px',
-   
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
   },
@@ -99,7 +98,11 @@ const styles = {
   },
 };
 
-export default () => <Leaderboard entries={sampleEntries} />;
+// Assign arrow function to a variable before exporting
+const LeaderboardPage = () => <Leaderboard entries={sampleEntries} />;
+
+export default LeaderboardPage;
+
 
  // Assuming you create a CSS file for styles
 
