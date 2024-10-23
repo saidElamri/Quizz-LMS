@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';  // Import SweetAlert2
 import '../pages/Register.css';
 import moroccoGif from '../assets/morocco-540.gif'; // Adjust the path as necessary
-
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -24,13 +24,31 @@ function Register() {
       });
 
       if (response.ok) {
-        console.log('Registration successful');
-        navigate('/'); // Redirect to login page after successful registration
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful!',
+          text: 'You have successfully registered. Redirecting to the login page...',
+          timer: 3000,  // 3 seconds before redirect
+          showConfirmButton: false
+        });
+
+        setTimeout(() => {
+          navigate('/');  // Redirect to login page after the alert
+        }, 3000);
       } else {
-        console.error('Registration failed');
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: 'Something went wrong. Please try again!',
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred during registration. Please try again later.',
+      });
     }
   };
 

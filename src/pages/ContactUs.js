@@ -66,7 +66,7 @@ function ContactUs() {
         </div>
       </div>
 
-      <div className="social-media">
+      <div className="social-media-contact">
         <h2>Connect With Us</h2>
         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
           <FaFacebookSquare />

@@ -34,12 +34,13 @@
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 10px;
+  color:#ffffff;
 }
 
 .social-media {
   display: flex;
   justify-content: center;
-  gap: 15px; /* Evenly space icons */
+  gap: 35px; /* Evenly space icons */
   margin-top: 20px;
 }
 

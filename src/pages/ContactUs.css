@@ -77,24 +77,24 @@
     background-color: #264653;
   }
   
-  .social-media {
+  .social-media-contact {
     margin-top: 40px;
   }
   
-  .social-media h2 {
+  .social-media-contact h2 {
     font-size: 1.8rem;
     color: #2a9d8f;
     margin-bottom: 20px;
   }
   
-  .social-media a {
+  .social-media-contact a {
     color: #264653;
     margin: 0 15px;
     font-size: 2rem;
     transition: color 0.3s;
   }
   
-  .social-media a:hover {
+  .social-media-contact a:hover {
     color: #2a9d8f;
   }
   
