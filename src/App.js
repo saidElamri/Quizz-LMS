@@ -15,6 +15,7 @@ import TeacherHome from './components/TeacherHome';
 import Profile from './pages/Profile';
 import Settings from './components/Settings';
 import Notifications from './components/Notifications';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -22,8 +23,10 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/ContactUs" element={<ContactUs />} />
+      
 
       <Route path="/about" element={<About />} />
+      <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
       <Route path="/Leaderboard" element={<Leaderboard />} />
       <Route path="/Quiz" element={<Quiz />} />
       <Route path="/resources" element={<ResourcesPage />} />
@@ -35,6 +38,7 @@ function App() {
       
       <Route path="/student-home" element={<StudentHome />} />
       <Route path="/teacher-home" element={<TeacherHome />} />
+      
 
       <Route element={<ProtectedRoute />}>
       <Route path="/quiz/:quizId" element={<Quiz />} />

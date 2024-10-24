@@ -25,7 +25,7 @@ function Footer() {
         <div className="footer-links">
           <a href="/about">About Us</a> {/* Link to the About Us page */}
           <a href="/ContactUs">Contact</a>
-          <a href="#privacy">Privacy Policy</a>
+          <a href="/PrivacyPolicy">Privacy Policy</a>
         </div>
       </div>
     </footer>
