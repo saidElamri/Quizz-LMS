@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.952773b0.css",
-    "main.js": "/static/js/main.46fedba7.js",
+    "main.css": "/static/css/main.369deb7f.css",
+    "main.js": "/static/js/main.e34a86d1.js",
     "static/media/morocco-540.gif": "/static/media/morocco-540.9304ef957bf2dbc265db.gif",
-    "static/media/logo.png.png": "/static/media/logo.png.69b9f7787153359deb8a.png",
+    "static/media/logo.png.png": "/static/media/logo.png.682ac8961b74b1bbe354.png",
     "index.html": "/index.html",
-    "main.952773b0.css.map": "/static/css/main.952773b0.css.map",
-    "main.46fedba7.js.map": "/static/js/main.46fedba7.js.map"
+    "main.369deb7f.css.map": "/static/css/main.369deb7f.css.map",
+    "main.e34a86d1.js.map": "/static/js/main.e34a86d1.js.map"
   },
   "entrypoints": [
-    "static/css/main.952773b0.css",
-    "static/js/main.46fedba7.js"
+    "static/css/main.369deb7f.css",
+    "static/js/main.e34a86d1.js"
   ]
 }

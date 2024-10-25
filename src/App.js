@@ -16,6 +16,7 @@ import Profile from './pages/Profile';
 import Settings from './components/Settings';
 import Notifications from './components/Notifications';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Quizzes from './pages/Quizzes';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/ContactUs" element={<ContactUs />} />
+      <Route path="/quizzes" element={<Quizzes />} />
       
 
       <Route path="/about" element={<About />} />
