@@ -11,22 +11,23 @@ const PendingGrading = () => {
 
   const fetchPendingGrading = async () => {
     try {
-      // Fetch pending quizzes from the API
-      const response = await fetch('https://quizz-lms.onrender.com/api/pending-grading');
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
       const data = await response.json();
 
-      if (response.ok) {
-        setPendingQuizzes(data);
-      } else {
-        console.error('Failed to fetch pending grading quizzes');
-      }
+      // Transform the data to simulate pending quizzes
+      const transformedData = data.slice(0, 5).map((item, index) => ({
+        _id: item.id,
+        title: item.title,
+        studentName: `Student ${index + 1}`
+      }));
+
+      setPendingQuizzes(transformedData);
     } catch (error) {
       console.error('Error fetching pending grading quizzes:', error);
     }
   };
 
   const handleGradeQuiz = (quizId) => {
-    // Navigate to the grading page for the selected quiz
     navigate(`/grade-quiz/${quizId}`);
   };
 

@@ -47,15 +47,35 @@ const Leaderboard = ({ entries = [] }) => {
   );
 };
 
-// Sample random leaderboard entries
-const sampleEntries = Array.from({ length: 30 }, (_, index) => ({
-  username: `User${index + 1}`,
-  score: Math.floor(Math.random() * 100), // Random score between 0 and 99
-  time: `${Math.floor(Math.random() * 60)}:${Math.floor(Math.random() * 60)
-    .toString()
-    .padStart(2, '0')}` // Random time in MM:SS format
-}));
+// Better static leaderboard entries
+const sampleEntries = [
+  { username: 'GamerGuru', score: 95, time: '02:15' },
+  { username: 'CodeNinja', score: 88, time: '03:05' },
+  { username: 'QuizWhiz', score: 82, time: '01:45' },
+  { username: 'Brainiac77', score: 76, time: '02:30' },
+  { username: 'SmartyPants', score: 70, time: '04:00' },
+  { username: 'QuizMaster', score: 67, time: '02:50' },
+  { username: 'TriviaTitan', score: 65, time: '03:20' },
+  { username: 'KnowledgeKing', score: 60, time: '02:10' },
+  { username: 'FactFinder', score: 55, time: '03:15' },
+  { username: 'Intellecto', score: 50, time: '03:30' },
+  { username: 'MindMaven', score: 45, time: '02:45' },
+  { username: 'QuestionQueen', score: 40, time: '01:55' },
+  { username: 'LogicLord', score: 35, time: '02:25' },
+  { username: 'BrainBoss', score: 30, time: '03:10' },
+  { username: 'WiseGuy', score: 25, time: '02:35' },
+  { username: 'NerdAlert', score: 20, time: '02:50' },
+  { username: 'SmartCookie', score: 15, time: '04:20' },
+  { username: 'WhizKid', score: 10, time: '05:00' },
+  { username: 'EinsteinJunior', score: 5, time: '04:45' },
+];
 
+// Assign arrow function to a variable before exporting
+const LeaderboardPage = () => <Leaderboard entries={sampleEntries} />;
+
+export default LeaderboardPage;
+
+// Add styles if needed (similar to your original styles)
 const styles = {
   container: {
     padding: '20px',
@@ -97,11 +117,6 @@ const styles = {
     color: '#777',
   },
 };
-
-// Assign arrow function to a variable before exporting
-const LeaderboardPage = () => <Leaderboard entries={sampleEntries} />;
-
-export default LeaderboardPage;
 
 
  // Assuming you create a CSS file for styles

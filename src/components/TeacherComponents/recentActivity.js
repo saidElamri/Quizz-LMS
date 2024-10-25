@@ -4,11 +4,19 @@ const RecentActivity = () => {
   const [recentActivity, setRecentActivity] = useState([]);
 
   useEffect(() => {
-    // Fetch recent activity from API
+    // Fetch from placeholder API
     const fetchRecentActivity = async () => {
       try {
-        const data = []; // Replace with your actual API call
-        setRecentActivity(data);
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const data = await response.json();
+        
+        // Transform data to match your recentActivity structure
+        const transformedData = data.map((user, index) => ({
+          name: user.name,
+          date: new Date(Date.now() - index * 3600 * 1000).toISOString(),
+        }));
+
+        setRecentActivity(transformedData);
       } catch (error) {
         console.error('Failed to fetch recent activity:', error);
       }

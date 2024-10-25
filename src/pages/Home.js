@@ -88,9 +88,29 @@ function Home() {
         </section>
         
         <section className="announcements">
-          <h2>Announcements</h2>
-          <p>No upcoming events or announcements at this time.</p>
-        </section>
+  <h2>Announcements</h2>
+  
+  <div className="announcement">
+    <h3>Weekly Quiz League!</h3>
+    <p>🌟 Join our Weekly Quiz League starting this Saturday! Compete against other participants for the chance to earn points and climb the leaderboard. Exciting prizes await the top scorers at the end of the month!</p>
+  </div>
+
+  <div className="announcement">
+    <h3>Themed Quiz Nights!</h3>
+    <p>🎉 Don’t miss our Themed Quiz Nights every Thursday! This week’s theme is “Movies & TV Shows.” Gather your friends, form a team, and put your knowledge to the test! Prizes for the top three teams!</p>
+  </div>
+
+  <div className="announcement">
+    <h3>Monthly Trivia Contest!</h3>
+    <p>🏆 Mark your calendars for our Monthly Trivia Contest on the first Friday of every month! Join us for an evening of fun and learning, with various topics to challenge your skills. Everyone is welcome, and prizes will be awarded!</p>
+  </div>
+
+  <div className="announcement">
+    <h3>Quiz Feedback Session!</h3>
+    <p>💬 We value your input! Join us next Wednesday for a Quiz Feedback Session where you can share your thoughts and suggestions about our quizzes. Help us make the quiz experience even better!</p>
+  </div>
+</section>
+
       </main>
       <Footer />
     </div>

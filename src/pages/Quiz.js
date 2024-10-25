@@ -10,9 +10,8 @@ const Quiz = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [score, setScore] = useState(0);
-  // Removed completedQuizzes state as it's not used
   const [showScorePopup, setShowScorePopup] = useState(false);
-  const [currentQuizIndex, setCurrentQuizIndex] = useState(0); // Track the current quiz
+  const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -22,7 +21,13 @@ const Quiz = () => {
           throw new Error('Failed to fetch quizzes');
         }
         const data = await response.json();
-        setQuizzes(data.results);
+        setQuizzes(data.results.map(quiz => ({
+          ...quiz,
+          shuffledAnswers: shuffleAnswers([
+            ...quiz.incorrect_answers,
+            quiz.correct_answer
+          ])
+        })));
       } catch (error) {
         console.error('Error fetching quizzes:', error);
         setError('Failed to load quizzes. Please try again later.');
@@ -34,8 +39,17 @@ const Quiz = () => {
     fetchQuizzes();
   }, []);
 
+  // Fisher-Yates Shuffle Algorithm for shuffling answers
+  const shuffleAnswers = (answers) => {
+    for (let i = answers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+    return answers;
+  };
+
   const handleAnswerChange = (questionIndex, selectedAnswer) => {
-    // Set user answer and check if it's correct
+    // Set the user's answer and check if it's correct
     setUserAnswers({
       ...userAnswers,
       [questionIndex]: selectedAnswer,
@@ -48,20 +62,31 @@ const Quiz = () => {
     });
 
     if (isCorrect) {
-      setScore(prevScore => prevScore + 1); // Increment score
+      setScore(prevScore => prevScore + 1); // Increment the score if the answer is correct
     }
 
-    // Move to next quiz after selection
     if (questionIndex < quizzes.length - 1) {
-      setCurrentQuizIndex(prevIndex => prevIndex + 1);
+      setCurrentQuizIndex(prevIndex => prevIndex + 1); // Move to the next quiz automatically
     } else {
-      setShowScorePopup(true); // Show score popup after last quiz
+      setShowScorePopup(true); // Show the score popup after the last quiz
     }
   };
 
+  // Handle moving to the next quiz manually if needed
   const handleNextQuiz = () => {
+    if (currentQuizIndex < quizzes.length - 1) {
+      setCurrentQuizIndex(prevIndex => prevIndex + 1); // Move to the next quiz
+      setShowScorePopup(false); // Close the score popup
+    }
+  };
+
+  // Handle restarting the quiz
+  const handleRestartQuiz = () => {
+    setUserAnswers({});
+    setResults({});
+    setScore(0);
     setShowScorePopup(false);
-    setCurrentQuizIndex(prevIndex => prevIndex + 1); // Move to next quiz
+    setCurrentQuizIndex(0); // Reset to the first quiz
   };
 
   if (loading) {
@@ -72,7 +97,7 @@ const Quiz = () => {
     return <div className="error-message">Error: {error}</div>;
   }
 
-  // Check if all quizzes are answered
+  // Check if the current quiz is the last one
   const isLastQuiz = currentQuizIndex === quizzes.length - 1;
 
   return (
@@ -85,16 +110,16 @@ const Quiz = () => {
           <div className="quiz-card">
             <h3 className="quiz-question">{quizzes[currentQuizIndex].question}</h3>
             <div className="quiz-options">
-              {quizzes[currentQuizIndex].incorrect_answers.concat(quizzes[currentQuizIndex].correct_answer).sort().map((option, i) => {
-                const isSelected = userAnswers[currentQuizIndex] === option; // Check if this option is selected
-                const isCorrect = results[currentQuizIndex] === true; // Check if the answer is correct
-                const isIncorrect = results[currentQuizIndex] === false; // Check if the answer is incorrect
-                
+              {quizzes[currentQuizIndex].shuffledAnswers.map((option, i) => {
+                const isSelected = userAnswers[currentQuizIndex] === option;
+                const isCorrect = results[currentQuizIndex] === true;
+                const isIncorrect = results[currentQuizIndex] === false;
+
                 return (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className={`option ${isCorrect && isSelected ? 'correct' : isIncorrect && isSelected ? 'incorrect' : ''}`}
-                    onClick={() => handleAnswerChange(currentQuizIndex, option)} // Make the entire option clickable
+                    onClick={() => handleAnswerChange(currentQuizIndex, option)}
                   >
                     <label>
                       <input
@@ -102,8 +127,8 @@ const Quiz = () => {
                         name={`question-${currentQuizIndex}`}
                         value={option}
                         style={{ display: 'none' }} // Hide the actual radio button
-                        checked={isSelected} // Mark the selected option
-                        readOnly // Prevent clicking the radio button directly
+                        checked={isSelected}
+                        readOnly
                       />
                       {option}
                     </label>
@@ -125,9 +150,15 @@ const Quiz = () => {
             <div className="score-popup-content">
               <h2>Quiz Completed!</h2>
               <p className="score">Your Score: {score} / {quizzes.length}</p>
-              <button className="next-quiz-button" onClick={handleNextQuiz}>
-                {isLastQuiz ? 'Close' : 'Next Quiz'}
-              </button>
+              {isLastQuiz ? (
+                <button className="restart-quiz-button" onClick={handleRestartQuiz}>
+                  Restart Quiz
+                </button>
+              ) : (
+                <button className="next-quiz-button" onClick={handleNextQuiz}>
+                  Next Quiz
+                </button>
+              )}
             </div>
           </div>
         )}

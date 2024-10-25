@@ -25,10 +25,9 @@ const Header = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery) {
-      // Redirect to a search results page with the query as a URL parameter
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
-      setSearchQuery(''); // Clear input after submission
-      setIsSearchOpen(false); // Close the search popup
+      setSearchQuery('');
+      setIsSearchOpen(false);
     }
   };
 
@@ -36,11 +35,9 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <Link to="/home">
-          <img src={logo} alt="Website Logo" className="logo" />
+          <img src={logo} alt="Website Logo" />
         </Link>
-        <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <span className="tagline">Empowering Learning Through Quizzes</span>
-        </Link>
+        <span className="tagline">Empowering Learning Through Quizzes</span>
       </div>
 
       <nav className="nav">
@@ -58,17 +55,15 @@ const Header = () => {
           <FaSearch size={20} />
         </button>
         {isSearchOpen && (
-          <div className="search-popup">
-            <form onSubmit={handleSearch}>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit">Search</button>
-            </form>
-          </div>
+          <form onSubmit={handleSearch} className="search-form">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit">Search</button>
+          </form>
         )}
       </div>
 

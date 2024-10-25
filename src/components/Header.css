@@ -1,3 +1,13 @@
+:root {
+  --background-color: #282c34; /* Header background color */
+  --text-color: #ffffff; /* Text color */
+  --border-color: #444; /* Border color */
+  --button-bg-color: #00796b; /* Button background color */
+  --button-bg-color-hover: #005f4b; /* Button hover background color */
+  --button-text-color: #ffffff; /* Button text color */
+  --button-text-color-hover: #ffffff; /* Button hover text color */
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -6,7 +16,8 @@
   background-color: var(--background-color);
   color: var(--text-color);
   flex-wrap: wrap;
-  position: relative; /* Add this to position absolute elements correctly */
+  position: relative; /* Position for absolute elements */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
 .logo {
@@ -53,6 +64,13 @@
 .nav ul li a {
   color: var(--text-color);
   text-decoration: none;
+  padding: 8px 12px; /* Padding for links */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
 }
 
 /* Search icon and popup styles */
@@ -85,6 +103,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
+  z-index: 100; /* Ensure it is above other elements */
 }
 
 .search-popup input {
@@ -211,7 +230,7 @@
     display: block;
     position: absolute;
     top: 20px;
-    left: -15px;
+    left: 20px; /* Adjust position of hamburger icon */
   }
 
   .nav {
@@ -220,8 +239,6 @@
 
   .logo {
     margin-bottom: 10px;
-    margin-left:-5px;
-    margin-top:-2px;
   }
 
   .dropdown-nav {
@@ -231,16 +248,16 @@
   .user-menu-button {
     width: 100%;
     justify-content: space-between;
-    margin-right:30px;
-    margin-top:-5px;
+    margin-right: 30px;
   }
-  .search-icon{
-    margin-right:5px;
-    margin-top:2px;
+
+  .search-icon {
+    margin-right: 5px;
+    margin-top: 2px;
   }
-  .theme-toggle{
-    margin-right:5px;
-    top:-0px;
+
+  .theme-toggle {
+    margin-right: 5px;
   }
 
   /* Align the search icon, user menu, and theme toggle to the top right */
