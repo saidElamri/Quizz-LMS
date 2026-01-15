@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Brain, Mail, Lock, LogIn, AlertCircle, ArrowLeft, Sparkles } from 'lucide-react';
+import { Brain, Mail, Lock, LogIn, AlertCircle, ArrowLeft, Sparkles, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useToast } from '../components/EliteToast';
 import './Register.css'; 
@@ -9,6 +9,7 @@ import './Register.css';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,28 +19,38 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Basic Client-side validation
+    if (!email.includes('@')) {
+      setError('Please enter a valid authorized email.');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/login', {
+      const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ identifier: email, password }),
       });
 
       if (response.ok) {
         const { token, role } = await response.json();
         login({ token, role });
         
+        addToast('Session Initialized', `Authentication successful. Welcome back, ${role}.`, 'success');
+        
         if (role === 'student') navigate('/student-home');
         else if (role === 'teacher') navigate('/teacher-home');
-        addToast('Session Initialized', `Authentication successful. Welcome back, ${role}.`, 'success');
       } else {
-        setError('Invalid email or password. Please try again.');
+        const errorText = await response.text();
+        setError(errorText === 'Invalid credentials' ? 'Invalid email or password. Please try again.' : errorText);
         addToast('Access Denied', 'Verification sequence failed.', 'error');
       }
     } catch (err) {
       setError('Connection error. Is the server running?');
+      addToast('System Error', 'Could not establish connection to the neural core.', 'error');
     } finally {
       setLoading(false);
     }
@@ -97,18 +108,43 @@ function Login() {
           <div className="input-group-bespoke">
             <Lock className="input-icon" size={18} />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Secure Cipher"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ paddingLeft: '48px', height: '52px' }}
+              style={{ paddingLeft: '48px', height: '52px', paddingRight: '48px' }}
             />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              style={{
+                position: 'absolute',
+                right: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none',
+                border: 'none',
+                color: 'var(--ink-400)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '4px'
+              }}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
 
-          <button type="submit" className="btn-elite" disabled={loading} style={{ width: '100%', height: '52px', marginTop: '8px', justifyContent: 'center' }}>
-            {loading ? 'VERIFYING...' : (
+          <button type="submit" className="btn-elite" disabled={loading} style={{ width: '100%', height: '52px', marginTop: '8px', justifyContent: 'center', gap: '8px' }}>
+            {loading ? (
+              <>
+                <Loader2 className="animate-spin" size={18} /> VERIFYING...
+              </>
+            ) : (
               <>
                 INITIALIZE_SESSION <LogIn size={18} />
               </>
