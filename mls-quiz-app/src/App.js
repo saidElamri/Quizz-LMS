@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './components/EliteToast';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -12,29 +14,40 @@ import ResourcesPage from './pages/Resources';
 import StudentHome from './components/StudentHome'; 
 import TeacherHome from './components/TeacherHome'; 
 import Profile from './pages/Profile';
-import Settings from './components/Settings';
+import Settings from './pages/Settings';
+import Contact from './pages/Contact';
+import Terms from './pages/Terms';
+import Assessments from './pages/Assessments';
+import LandingPage from './pages/LandingPage';
+import EditQuiz from './pages/EditQuiz';
+
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/Home" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/Leaderboard" element={<Leaderboard />} />
-      <Route path="/Quiz" element={<Quiz />} />
-      <Route path="/resources" element={<ResourcesPage />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/settings" element={<Settings />} />
-
-      
-      <Route path="/student-home" element={<StudentHome />} />
-      <Route path="/teacher-home" element={<TeacherHome />} />
-
-      <Route element={<ProtectedRoute />}>
-        <Route path="/quiz/:id" element={<Quiz />} />
-        <Route path="/create-quiz" element={<QuizCreator />} />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <ToastProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/Leaderboard" element={<Leaderboard />} />
+          <Route path="/quiz" element={<Assessments />} />
+          <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/quiz/:quizId" element={<Quiz />} />
+            <Route path="/create-quiz" element={<QuizCreator />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/student-home" element={<StudentHome />} />
+            <Route path="/teacher-home" element={<TeacherHome />} />
+            <Route path="/edit-quiz/:quizId" element={<EditQuiz />} />
+          </Route>
+        </Routes>
+      </ToastProvider>
+    </AuthProvider>
   );
 }
 

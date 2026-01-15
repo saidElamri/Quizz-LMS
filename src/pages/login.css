@@ -1,0 +1,244 @@
+/* General Styles for the Login Page */
+.LoginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background circles */
+.LoginPage::before,
+.LoginPage::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.LoginPage::before {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+}
+
+.LoginPage::after {
+  width: 400px;
+  height: 400px;
+  bottom: -150px;
+  right: -150px;
+}
+/* Container for the login and description side by side */
+.LoginContainer {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  max-width: 900px;
+  width: 100%;
+  z-index: 2;
+  padding: 30px;
+  gap: 20px;
+}
+
+/* Left side - Login */
+.Login {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Login h2 {
+  margin-bottom: 25px;
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.Login p.error {
+  color: #ff4b5c;
+  margin-bottom: 15px;
+}
+
+
+.Login form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.Login div {
+  margin-bottom: 20px;
+  width: 100%;
+  margin-left:-10px;
+}
+
+.Login label {
+  display: block;
+  margin-bottom: 8px;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.Login input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  color: #333;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.Login input:focus {
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+
+.Login button {
+  background: #1d976c;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background 0.3s ease, transform 0.2s;
+  width: 100%; 
+  margin-left:5px;
+  margin-top:10px;
+  margin-left: -10px
+}
+
+.Login button:hover {
+  background: #11998e;
+  transform: translateY(-2px);
+}
+
+.signup-link {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.signup-link a {
+  color: #ffcb74;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Right side - Quiz Description */
+.QuizDescription {
+  flex: 1;
+  padding-left: 20px;
+  color: #ffffff;
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.QuizDescription h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.QuizDescription p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+  font-family: 'Arial', sans-serif; /* Ensure consistency with your app */
+  border-radius: 12px; /* Match your login box */
+}
+
+.swal2-title {
+  color: #1d976c; /* Match your button color */
+}
+
+.swal2-content {
+  color: #333; /* Adjust content color */
+}
+
+.swal2-confirm {
+  background-color: #1d976c; /* Match button color */
+  color: white;
+}
+
+.swal2-confirm:hover {
+  background-color: #11998e; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .LoginContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .Login,
+  .QuizDescription {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .Login h2 {
+    text-align: center;
+    font-size: 1.6rem;
+  }
+
+  .signup-link {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .LoginPage {
+    padding: 5px;
+  }
+
+  .LoginContainer {
+    padding: 15px;
+  }
+
+  .Login h2 {
+    font-size: 1.4rem;
+  }
+
+  .Login label {
+    font-size: 0.85rem;
+  }
+
+  .Login input {
+    padding: 10px;
+  }
+
+  .Login button {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .signup-link a {
+    font-size: 0.8rem;
+  }
+}

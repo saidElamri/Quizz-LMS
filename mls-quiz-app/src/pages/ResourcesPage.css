@@ -1,0 +1,58 @@
+.cat-tab-elite {
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: var(--ink-600);
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.3s;
+  letter-spacing: 0.02em;
+}
+
+.cat-tab-elite.active {
+  color: white;
+}
+
+.cat-tab-elite:hover:not(.active) {
+  color: var(--ink-900);
+}
+
+.resource-card-elite {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+}
+
+.resource-card-elite:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -15px rgba(0,0,0,0.1);
+}
+
+.resource-card-elite h3 {
+  transition: color 0.3s;
+}
+
+.resource-card-elite:hover h3 {
+  color: var(--fluid-primary);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 640px) {
+  .cat-tab-elite {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+  }
+}

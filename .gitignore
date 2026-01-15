@@ -1,0 +1,17 @@
+node_modules/
+build/
+dist/
+.env
+*.log
+.DS_Store
+mls-quiz-app/build/
+mls-quiz-app/dist/
+mls-quiz-app/node_modules/
+my-backend/node_modules/
+my-backend/.env
+my-backend/build/
+my-backend/dist/
+**/node_modules
+**/build
+**/dist
+**/.env

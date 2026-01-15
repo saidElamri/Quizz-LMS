@@ -5,6 +5,10 @@ const quizSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    default: 'Advanced AI'
+  },
   questions: [
     {
       question: { type: String, required: true },
@@ -12,12 +16,15 @@ const quizSchema = new mongoose.Schema({
       correctAnswer: { type: String, required: true },
     },
   ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Quiz = mongoose.model('Quiz', quizSchema);
-
-module.exports = Quiz;
+module.exports = mongoose.model('Quiz', quizSchema);

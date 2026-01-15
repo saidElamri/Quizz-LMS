@@ -1,0 +1,116 @@
+:root {
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --highlight-color: #27ae60;
+    --secondary-color: #2980b9;
+    --section-bg-color: white;
+    --footer-bg-color: #2c3e50;
+    --footer-text-color: white;
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  [data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --highlight-color: #27ae60;
+    --secondary-color: #bb86fc;
+    --section-bg-color: #1e1e1e;
+    --footer-bg-color: #181818;
+    --footer-text-color: #bbbbbb;
+    --box-shadow-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* General Page Styles */
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    color: var(--text-color);
+    text-align: center;
+    margin: 50px 0;
+  }
+  
+  h2 {
+    font-size: 2em;
+    color: var(--highlight-color);
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+    color: var(--secondary-color);
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  /* About Page Container */
+
+  
+  section {
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    padding: 20px;
+    background-color: var(--section-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow-color);
+  }
+  
+  /* Contact Section */
+  section:last-of-type {
+    background-color: var(--section-bg-color);
+    text-align: center;
+  }
+  
+  /* Footer styles */
+  footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  a {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2em;
+    }
+  
+    h2 {
+      font-size: 1.8em;
+    }
+  
+    h3 {
+      font-size: 1.3em;
+    }
+  
+    p {
+      font-size: 1em;
+    }
+  }
+  

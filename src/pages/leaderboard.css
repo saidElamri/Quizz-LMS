@@ -1,0 +1,51 @@
+.leaderboard-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.leaderboard-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #333;
+  font-weight: 600; /* Increased font weight for better visibility */
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-header {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.leaderboard-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.leaderboard-cell {
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.leaderboard-cell:hover {
+  background-color: #e0e0e0;
+}
+
+/* Additional styles for improved layout and presentation */
+.leaderboard-section {
+  margin-bottom: 30px; /* Spacing between sections */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* White background for sections */
+}
