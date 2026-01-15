@@ -48,5 +48,11 @@
   },
   "devDependencies": {
     "@shadcn/ui": "^0.0.4"
+  },
+  "overrides": {
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
+    "webpack-dev-server": "^4.15.0",
+    "path-to-regexp": "^0.1.12"
   }
 }
