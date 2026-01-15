@@ -5,8 +5,11 @@ const cors = require('cors');
 const authRoutes = require('./auth');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('./models/user'); // Adjust the path as necessary
-const Quiz = require('./models/Quiz'); // Assuming you have a separate Quiz model file
+const User = require('./models/user');
+const Quiz = require('./models/Quiz');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const authMiddleware = require('./middleware/authMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -14,8 +17,17 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Middleware
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
 app.use('/api/auth', authRoutes);
 
 // Set the strictPopulate option
@@ -30,31 +42,32 @@ mongoose.connect(process.env.MONGODB_URI, {
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Create a quiz
-app.post('/api/quizzes', async (req, res) => {
+app.post('/api/quizzes', authMiddleware, async (req, res) => {
   const { title, questions } = req.body;
 
   // Validate incoming quiz structure
+  if (!title || typeof title !== 'string') {
+    return res.status(400).json({ error: 'Title is required and must be a string.' });
+  }
+
   if (!Array.isArray(questions) || questions.length === 0) {
     return res.status(400).json({ error: 'Questions are required.' });
   }
 
   for (const question of questions) {
-    if (question.options.length !== 4) {
+    if (!question.options || !Array.isArray(question.options) || question.options.length !== 4) {
       return res.status(400).json({ error: 'Each question must have exactly 4 options.' });
+    }
+    if (!question.text || typeof question.text !== 'string') {
+       return res.status(400).json({ error: 'Each question must have text.' });
     }
   }
 
   try {
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Debugging: Log the decoded token to verify user ID
-    console.log('Decoded token:', decoded);
-
     const newQuiz = new Quiz({
       title,
       questions,
-      createdBy: decoded.id, // Ensure decoded.id is correct
+      createdBy: req.user.id,
     });
 
     await newQuiz.save();
@@ -95,13 +108,9 @@ app.get('/api/quizzes/:id', async (req, res) => {
 });
 
 // Fetch quizzes by teacher
-app.get('/api/quizzes/teacher', async (req, res) => {
+app.get('/api/quizzes/teacher', authMiddleware, async (req, res) => {
   try {
-    // Verify the user token to ensure only authenticated users can fetch their quizzes
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    const quizzes = await Quiz.find({ createdBy: decoded.id });
+    const quizzes = await Quiz.find({ createdBy: req.user.id });
     res.json(quizzes);
   } catch (error) {
     console.error('Error fetching teacher quizzes:', error);

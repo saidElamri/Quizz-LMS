@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Briefcase, ArrowLeft, Brain, Sparkles } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Briefcase, ArrowLeft, Brain, Sparkles, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useToast } from '../components/EliteToast';
 import { motion } from 'framer-motion';
 import './Register.css';
@@ -9,13 +9,29 @@ function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState('student');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { addToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    // Client-side validation
+    if (!email.includes('@')) {
+      setError('Invalid email address.');
+      addToast('Validation Error', 'Please enter a valid email.', 'error');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      addToast('Security Warning', 'Password strength below requirements.', 'error');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -31,10 +47,14 @@ function Register() {
         addToast('Identity Created', 'Your scholarly profile has been initialized.', 'success');
         navigate('/login');
       } else {
-        addToast('Initialization Fault', 'Could not create identity. Email may already be associated.', 'error');
+        const errorData = await response.json();
+        setError(errorData.error || 'Initialization Fault');
+        addToast('Initialization Fault', errorData.error || 'Could not create identity.', 'error');
       }
     } catch (error) {
       console.error('Error:', error);
+      setError('System Connection Lost');
+      addToast('System Error', 'Neural link failed. Is the core operational?', 'error');
     } finally {
       setLoading(false);
     }
@@ -63,6 +83,29 @@ function Register() {
           <h1 className="title-display" style={{ fontSize: 'clamp(1.8rem, 7vw, 2.5rem)' }}>Identity <span className="text-fluid">Creation</span></h1>
           <p style={{ color: 'var(--ink-600)', fontSize: '0.9rem', fontWeight: 600 }}>Initialize your academic profile to begin the journey.</p>
         </div>
+
+        {error && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              background: '#fef2f2',
+              color: '#991b1b',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginBottom: '20px',
+              fontSize: '0.85rem',
+              border: '1px solid #fee2e2',
+              fontWeight: 600
+            }}
+          >
+            <AlertCircle size={16} />
+            <span>{error}</span>
+          </motion.div>
+        )}
 
         <form onSubmit={handleSubmit} className="bespoke-form" style={{ gap: '16px' }}>
           <div className="input-group-bespoke">
@@ -94,14 +137,35 @@ function Register() {
           <div className="input-group-bespoke">
             <Lock className="input-icon" size={18} />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Secure Password"
               autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ paddingLeft: '48px', height: '52px' }}
+              style={{ paddingLeft: '48px', height: '52px', paddingRight: '48px' }}
             />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              style={{
+                position: 'absolute',
+                right: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none',
+                border: 'none',
+                color: 'var(--ink-400)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '4px'
+              }}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
 
           <div className="role-selector-container">
@@ -126,8 +190,12 @@ function Register() {
             </div>
           </div>
 
-          <button type="submit" className="btn-elite register-submit" disabled={loading} style={{ width: '100%', height: '52px', marginTop: '12px', justifyContent: 'center' }}>
-            {loading ? 'INITIALIZING...' : (
+          <button type="submit" className="btn-elite register-submit" disabled={loading} style={{ width: '100%', height: '52px', marginTop: '12px', justifyContent: 'center', gap: '8px' }}>
+            {loading ? (
+              <>
+                <Loader2 className="animate-spin" size={18} /> INITIALIZING...
+              </>
+            ) : (
               <>
                 <UserPlus size={18} /> Finalize Creation
               </>
